@@ -1,7 +1,5 @@
 CHANGELOG
 
 [Master]
-
-[0.1.0]
-- Add fromMidi
-- Add toMidi
+- Add fromFreq, toFreq and cents
+- Add fromMidi and toMidi

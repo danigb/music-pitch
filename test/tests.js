@@ -23,5 +23,33 @@ vows.describe('music-pitch').addBatch({
       assert.equal(pitch.toMidi('B#3'), pitch.toMidi('C4'))
       assert.equal(pitch.toMidi('B##3'), pitch.toMidi('Db4'))
     }
+  },
+  'frequencies': {
+    'fromFreq': function () {
+      assert.equal(pitch.fromFreq(440), 'A4')
+      assert.equal(pitch.fromFreq(220), 'A3')
+      assert.equal(pitch.fromFreq(329.6275569128699), 'E4')
+      assert.equal(pitch.fromFreq(330), 'E4')
+      assert.equal(pitch.fromFreq(335), 'E4')
+      assert.equal(pitch.fromFreq(340), 'F4')
+      assert.equal(pitch.fromFreq(349.2282314330039), 'F4')
+    },
+    'fromFreq with custom tuning': function () {
+      assert.equal(pitch.fromFreq(220, 220), 'A4')
+    },
+    'toFreq': function () {
+      assert.equal(pitch.toFreq('A4'), 440)
+      assert.equal(pitch.toFreq('A3'), 220)
+      assert.equal(pitch.toFreq('E4'), 329.6275569128699)
+      assert.equal(pitch.toFreq('F4'), 349.2282314330039)
+    },
+    'toFreq custom tuning': function () {
+      assert.equal(pitch.toFreq('A4', 444), 444)
+      assert.equal(pitch.toFreq('A3', 444), 222)
+    },
+    'cents': function () {
+      assert.equal(pitch.cents('A4', 'A#4'), 100)
+      assert.equal(pitch.cents('A4', 444), 15.66)
+    }
   }
 }).export(module)

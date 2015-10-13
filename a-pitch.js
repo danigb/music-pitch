@@ -1,7 +1,7 @@
 
 var noop = function (x) { return x }
 
-module.exports = function type () {
+function type () {
   var argTypes = []
   var len = arguments.length - 1
   for (var i = 0; i < len; i++) {
@@ -17,4 +17,8 @@ module.exports = function type () {
       return returnType(fn.apply(null, args))
     }
   }
+}
+
+module.exports = {
+  type: type
 }

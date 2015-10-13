@@ -4,7 +4,8 @@
   "description": "Musical pitch, midi, frequency, note name",
   "main": "index.js",
   "scripts": {
-    "test": "vows --spec test/*.js"
+    "test": "vows --spec test/*.js",
+    "docs": "docme README.md"
   },
   "repository": {
     "type": "git",
