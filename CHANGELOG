@@ -1,5 +1,6 @@
 CHANGELOG
 
 [Master]
+- Add choma function
 - Add fromFreq, toFreq and cents
 - Add fromMidi and toMidi

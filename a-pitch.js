@@ -2,19 +2,22 @@
 var noop = function (x) { return x }
 
 function type () {
-  var argTypes = []
+  var argParsers = []
   var len = arguments.length - 1
   for (var i = 0; i < len; i++) {
-    argTypes.push(arguments[i] || noop)
+    argParsers.push(arguments[i] || noop)
   }
-  var returnType = arguments[len] || noop
+  var builder = arguments[len] || noop
   return function (fn) {
     return function () {
+      var value
       var args = []
       for (var i = 0; i < len; i++) {
-        args.push(argTypes[i](arguments[i]))
+        value = argParsers[i](arguments[i])
+        if (value === null) return null
+        else args.push(value)
       }
-      return returnType(fn.apply(null, args))
+      return builder(fn.apply(null, args))
     }
   }
 }

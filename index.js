@@ -3,6 +3,9 @@
 var pitch = require('pitch-parser')
 var ap = require('./a-pitch')
 
+// Semitones from C to C D E F G A B
+var SEMITONES = [ 0, 2, 4, 5, 7, 9, 11 ]
+// Chromatic melodic scale
 var CHROMATIC = [ 'C', 'Db', 'D', 'Eb', 'E', 'F', 'F#', 'G', 'Ab', 'A', 'Bb', 'B' ]
 
 /**
@@ -22,9 +25,6 @@ function fromMidi (midi) {
   var oct = Math.floor(midi / 12) - 1
   return name + oct
 }
-
-// Semitones for C D E F G A B
-var SEMITONES = [ 0, 2, 4, 5, 7, 9, 11 ]
 
 /**
  * Get the midi number of a pitch
@@ -107,6 +107,22 @@ function cents (from, to, decimals) {
   return Math.floor(1200 * (Math.log(toFq / fromFq) * dec / Math.log(2))) / dec
 }
 
+/**
+ * Get chroma of a pitch. The chroma is the integer notation of a pitch class
+ *
+ * @name chroma
+ * @param {String} pitch - the pitch to get the chorma from
+ * @return {Integer} the chroma
+ *
+ * @example
+ * chroma('C') // => 0
+ * chroma('B#') // => 0
+ * chroma('Dbb') // => 0
+ */
+function chroma (p) {
+  return (SEMITONES[p[0]] + p[1] + 12) % 12
+}
+
 var pitchToAny = ap.type(pitch.parse, null)
 
 module.exports = {
@@ -114,5 +130,6 @@ module.exports = {
   toMidi: pitchToAny(toMidi),
   fromFreq: fromFreq,
   toFreq: ap.type(pitch.parse, null, null)(toFreq),
-  cents: cents
+  cents: cents,
+  chroma: pitchToAny(chroma)
 }
