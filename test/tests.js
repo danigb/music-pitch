@@ -3,6 +3,28 @@ var assert = require('assert')
 var pitch = require('../')
 
 vows.describe('music-pitch').addBatch({
+  'pitch str': {
+    'name': function () {
+      assert.equal(pitch.name('c'), 'C')
+      assert.equal(pitch.name('bbb3'), 'Bbb3')
+      assert.equal(pitch.name('fx'), 'F##')
+      assert.equal(pitch.name([0, 1, 3]), 'C#3')
+    },
+    'letter': function () {
+      assert.equal(pitch.letter('fx'), 'F')
+      assert.equal(pitch.letter('blah'), null)
+    },
+    'octave': function () {
+      assert.equal(pitch.octave('C##4'), 4)
+      assert.equal(pitch.octave([3, -2, 2]), 2)
+      assert.equal(pitch.octave('C##'), null)
+    },
+    'pitch class': function () {
+      assert.equal(pitch.pitchClass('e#2'), 'E#')
+      assert.equal(pitch.pitchClass('dxx'), 'D####')
+      assert.equal(pitch.pitchClass('db'), 'Db')
+    }
+  },
   'midi': {
     'fromMidi': function () {
       var notes = [60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73]

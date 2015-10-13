@@ -1,12 +1,66 @@
 'use strict'
 
-var pitch = require('pitch-parser')
 var ap = require('./a-pitch')
+var pitch = ap.type(require('pitch-parser'))
 
 // Semitones from C to C D E F G A B
 var SEMITONES = [ 0, 2, 4, 5, 7, 9, 11 ]
 // Chromatic melodic scale
 var CHROMATIC = [ 'C', 'Db', 'D', 'Eb', 'E', 'F', 'F#', 'G', 'Ab', 'A', 'Bb', 'B' ]
+
+var lib = {}
+module.exports = lib
+
+/**
+ * Get pitch name in scientific notation
+ *
+ * @param {String|Array} pitch - the pitch string or array
+ * @return {String} the name of the pitch
+ */
+function name (p) {
+  return pitch.build(pitch.parse(p))
+}
+lib.name = name
+
+/**
+ * Get letter of the pitch (in uppercase)
+ *
+ * @param {String|Array} pitch - the pitch as string or array
+ * @return {String} the letter of the pitch in uppercase
+ *
+ * @example
+ * pitch.letter('fx') // => 'F'
+ */
+function letter (pitch) {
+  var n = name(pitch)
+  return n ? n.slice(0, 1) : null
+}
+lib.letter = letter
+
+/**
+ * Get the octave of a pitch
+ *
+ */
+function octave (pitch) {
+  return pitch[2]
+}
+lib.octave = ap.fn([pitch.parse], null, octave)
+
+/**
+ * Get the pitch class (pitch name without octaves) from a pitch
+ *
+ * @param {String} pitch - the pitch to get the pitchClass number from
+ * @return {String} the pitch class
+ *
+ * @example
+ * pitchClass('a4') // => 'A'
+ * pitchClass('ab') // => 'Ab'
+ * pitchClass('cx2') // => 'C##'
+ */
+function pitchClass (p) {
+  return [p[0], p[1], null]
+}
+lib.pitchClass = ap.fn([pitch.parse], pitch.build, pitchClass)
 
 /**
  * Get the pitch of the given midi number
@@ -25,6 +79,7 @@ function fromMidi (midi) {
   var oct = Math.floor(midi / 12) - 1
   return name + oct
 }
+lib.fromMidi = fromMidi
 
 /**
  * Get the midi number of a pitch
@@ -42,6 +97,7 @@ function toMidi (t) {
   if (!t[2] && t[2] !== 0) return null
   return SEMITONES[t[0]] + t[1] + 12 * (t[2] + 1)
 }
+lib.toMidi = ap.fn([pitch.parse], null, toMidi)
 
 /**
  * Get the pitch of a given frequency.
@@ -65,6 +121,7 @@ function fromFreq (freq, tuning) {
   var midi = Math.round(69 + lineal)
   return fromMidi(midi)
 }
+lib.fromFreq = fromFreq
 
 // decimal number
 var NUM = /^\d+(?:\.\d+)?$/
@@ -81,11 +138,12 @@ var NUM = /^\d+(?:\.\d+)?$/
  */
 function toFreq (p, tuning) {
   if (NUM.test(p)) return +p
-  var midi = toMidi(pitch.parse(p) || p)
+  var midi = toMidi(pitch.parse(p))
   if (!midi) return null
   tuning = tuning || 440
   return Math.pow(2, (midi - 69) / 12) * tuning
 }
+lib.toFreq = ap.fn([pitch.parse, null], null, toFreq)
 
 /**
  * Get the distance in cents between pitches or frequencies
@@ -106,6 +164,7 @@ function cents (from, to, decimals) {
   var toFq = toFreq(to)
   return Math.floor(1200 * (Math.log(toFq / fromFq) * dec / Math.log(2))) / dec
 }
+lib.cents = cents
 
 /**
  * Get chroma of a pitch. The chroma is the integer notation of a pitch class
@@ -122,14 +181,4 @@ function cents (from, to, decimals) {
 function chroma (p) {
   return (SEMITONES[p[0]] + p[1] + 12) % 12
 }
-
-var pitchToAny = ap.type(pitch.parse, null)
-
-module.exports = {
-  fromMidi: fromMidi,
-  toMidi: pitchToAny(toMidi),
-  fromFreq: fromFreq,
-  toFreq: ap.type(pitch.parse, null, null)(toFreq),
-  cents: cents,
-  chroma: pitchToAny(chroma)
-}
+lib.chroma = ap.fn([pitch.parse], null, chroma)

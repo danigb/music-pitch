@@ -28,5 +28,8 @@
   "devDependencies": {
     "pitch-parser": "file:../pitch-parser",
     "vows": "^0.8.1"
+  },
+  "dependencies": {
+    "pitch-parser": "file:../pitch-parser"
   }
 }

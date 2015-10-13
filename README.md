@@ -29,7 +29,7 @@ Note names, midi, frequencies
 <li>
 <a href="https://github.com/danigb/music-pitch/blob/master/index.js">index.js</a>
 <span>, </span>
-<a href="https://github.com/danigb/music-pitch/blob/master/index.js#L110">lineno 110</a>
+<a href="https://github.com/danigb/music-pitch/blob/master/index.js#L169">lineno 169</a>
 </li>
 </ul></dd>
 </dl>
@@ -90,7 +90,7 @@ chroma('Dbb') // => 0</code></pre>
 <li>
 <a href="https://github.com/danigb/music-pitch/blob/master/index.js">index.js</a>
 <span>, </span>
-<a href="https://github.com/danigb/music-pitch/blob/master/index.js#L103">lineno 103</a>
+<a href="https://github.com/danigb/music-pitch/blob/master/index.js#L161">lineno 161</a>
 </li>
 </ul></dd>
 </dl>
@@ -145,7 +145,7 @@ if you need to know the difference between the the frequency and the pitch.</p>
 <li>
 <a href="https://github.com/danigb/music-pitch/blob/master/index.js">index.js</a>
 <span>, </span>
-<a href="https://github.com/danigb/music-pitch/blob/master/index.js#L62">lineno 62</a>
+<a href="https://github.com/danigb/music-pitch/blob/master/index.js#L118">lineno 118</a>
 </li>
 </ul></dd>
 <dt class="tag-see">See:</dt>
@@ -206,7 +206,7 @@ pitch class is given to the same midi number.</p>
 <li>
 <a href="https://github.com/danigb/music-pitch/blob/master/index.js">index.js</a>
 <span>, </span>
-<a href="https://github.com/danigb/music-pitch/blob/master/index.js#L23">lineno 23</a>
+<a href="https://github.com/danigb/music-pitch/blob/master/index.js#L77">lineno 77</a>
 </li>
 </ul></dd>
 </dl>
@@ -224,6 +224,181 @@ Type
 </dl>
 <h5>Example</h5>
 <pre class="prettyprint"><code>fromMidi(69) // => 'A4'</code></pre>
+</dd>
+<dt>
+<h4 class="name" id="letter"><span class="type-signature"></span>letter<span class="signature">(pitch)</span><span class="type-signature"> &rarr; {String}</span></h4>
+</dt>
+<dd>
+<div class="description">
+<p>Get letter of the pitch (in uppercase)</p>
+</div>
+<h5>Parameters:</h5>
+<table class="params">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th class="last">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="name"><code>pitch</code></td>
+<td class="type">
+<span class="param-type">String</span>
+|
+<span class="param-type">Array</span>
+</td>
+<td class="description last"><p>the pitch as string or array</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="details">
+<dt class="tag-source">Source:</dt>
+<dd class="tag-source"><ul class="dummy">
+<li>
+<a href="https://github.com/danigb/music-pitch/blob/master/index.js">index.js</a>
+<span>, </span>
+<a href="https://github.com/danigb/music-pitch/blob/master/index.js#L34">lineno 34</a>
+</li>
+</ul></dd>
+</dl>
+<h5>Returns:</h5>
+<div class="param-desc">
+<p>the letter of the pitch in uppercase</p>
+</div>
+<dl>
+<dt>
+Type
+</dt>
+<dd>
+<span class="param-type">String</span>
+</dd>
+</dl>
+<h5>Example</h5>
+<pre class="prettyprint"><code>pitch.letter('fx') // => 'F'</code></pre>
+</dd>
+<dt>
+<h4 class="name" id="name"><span class="type-signature"></span>name<span class="signature">(pitch)</span><span class="type-signature"> &rarr; {String}</span></h4>
+</dt>
+<dd>
+<div class="description">
+<p>Get pitch name in scientific notation</p>
+</div>
+<h5>Parameters:</h5>
+<table class="params">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th class="last">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="name"><code>pitch</code></td>
+<td class="type">
+<span class="param-type">String</span>
+|
+<span class="param-type">Array</span>
+</td>
+<td class="description last"><p>the pitch string or array</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="details">
+<dt class="tag-source">Source:</dt>
+<dd class="tag-source"><ul class="dummy">
+<li>
+<a href="https://github.com/danigb/music-pitch/blob/master/index.js">index.js</a>
+<span>, </span>
+<a href="https://github.com/danigb/music-pitch/blob/master/index.js#L20">lineno 20</a>
+</li>
+</ul></dd>
+</dl>
+<h5>Returns:</h5>
+<div class="param-desc">
+<p>the name of the pitch</p>
+</div>
+<dl>
+<dt>
+Type
+</dt>
+<dd>
+<span class="param-type">String</span>
+</dd>
+</dl>
+</dd>
+<dt>
+<h4 class="name" id="octave"><span class="type-signature"></span>octave<span class="signature">()</span><span class="type-signature"></span></h4>
+</dt>
+<dd>
+<div class="description">
+<p>Get the octave of a pitch</p>
+</div>
+<dl class="details">
+<dt class="tag-source">Source:</dt>
+<dd class="tag-source"><ul class="dummy">
+<li>
+<a href="https://github.com/danigb/music-pitch/blob/master/index.js">index.js</a>
+<span>, </span>
+<a href="https://github.com/danigb/music-pitch/blob/master/index.js#L44">lineno 44</a>
+</li>
+</ul></dd>
+</dl>
+</dd>
+<dt>
+<h4 class="name" id="pitchClass"><span class="type-signature"></span>pitchClass<span class="signature">(pitch)</span><span class="type-signature"> &rarr; {String}</span></h4>
+</dt>
+<dd>
+<div class="description">
+<p>Get the pitch class (pitch name without octaves) from a pitch</p>
+</div>
+<h5>Parameters:</h5>
+<table class="params">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th class="last">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="name"><code>pitch</code></td>
+<td class="type">
+<span class="param-type">String</span>
+</td>
+<td class="description last"><p>the pitch to get the pitchClass number from</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="details">
+<dt class="tag-source">Source:</dt>
+<dd class="tag-source"><ul class="dummy">
+<li>
+<a href="https://github.com/danigb/music-pitch/blob/master/index.js">index.js</a>
+<span>, </span>
+<a href="https://github.com/danigb/music-pitch/blob/master/index.js#L60">lineno 60</a>
+</li>
+</ul></dd>
+</dl>
+<h5>Returns:</h5>
+<div class="param-desc">
+<p>the pitch class</p>
+</div>
+<dl>
+<dt>
+Type
+</dt>
+<dd>
+<span class="param-type">String</span>
+</dd>
+</dl>
+<h5>Example</h5>
+<pre class="prettyprint"><code>pitchClass('a4') // => 'A'
+pitchClass('ab') // => 'Ab'
+pitchClass('cx2') // => 'C##'</code></pre>
 </dd>
 <dt>
 <h4 class="name" id="toFreq"><span class="type-signature"></span>toFreq<span class="signature">(pitch, tuning)</span><span class="type-signature"> &rarr; {Float}</span></h4>
@@ -264,7 +439,7 @@ Type
 <li>
 <a href="https://github.com/danigb/music-pitch/blob/master/index.js">index.js</a>
 <span>, </span>
-<a href="https://github.com/danigb/music-pitch/blob/master/index.js#L82">lineno 82</a>
+<a href="https://github.com/danigb/music-pitch/blob/master/index.js#L139">lineno 139</a>
 </li>
 </ul></dd>
 </dl>
@@ -326,7 +501,7 @@ value from the pitch string)</p></td>
 <li>
 <a href="https://github.com/danigb/music-pitch/blob/master/index.js">index.js</a>
 <span>, </span>
-<a href="https://github.com/danigb/music-pitch/blob/master/index.js#L41">lineno 41</a>
+<a href="https://github.com/danigb/music-pitch/blob/master/index.js#L96">lineno 96</a>
 </li>
 </ul></dd>
 </dl>
