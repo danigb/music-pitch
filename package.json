@@ -1,0 +1,31 @@
+{
+  "name": "music-pitch",
+  "version": "0.1.0",
+  "description": "Musical pitch, midi, frequency, note name",
+  "main": "index.js",
+  "scripts": {
+    "test": "vows --spec test/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/danigb/music-pitch.git"
+  },
+  "keywords": [
+    "pitch",
+    "note",
+    "frequency",
+    "midi",
+    "theory",
+    "music"
+  ],
+  "author": "danigb",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/danigb/music-pitch/issues"
+  },
+  "homepage": "https://github.com/danigb/music-pitch#readme",
+  "devDependencies": {
+    "pitch-parser": "file:../pitch-parser",
+    "vows": "^0.8.1"
+  }
+}

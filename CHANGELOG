@@ -1,0 +1,7 @@
+CHANGELOG
+
+[Master]
+
+[0.1.0]
+- Add fromMidi
+- Add toMidi
