@@ -1,7 +1,7 @@
 {
   "name": "music-pitch",
   "version": "0.1.0",
-  "description": "Musical pitch, midi, frequency, note name",
+  "description": "The gap between midi and synth: note names, midi numbers and frequencies",
   "main": "index.js",
   "scripts": {
     "test": "vows --spec test/*.js",

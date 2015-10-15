@@ -6,7 +6,7 @@
 [![npm version](https://badge.fury.io/js/music-pitch.svg)](https://badge.fury.io/js/music-pitch)
 
 
-`music-pitch` is the bridge between midi, your app and your synthetizers. Is a small (2.5kb minified) and fast library to manipulate note names, midi notes and note frequencies.
+`music-pitch` is the bridge between midi, your app and your synthetizers. It's a small (2.5kb minified) and fast library to manipulate note names, midi notes and note frequencies.
 
 ```js
 var pitch = require('music-pitch')
@@ -84,7 +84,11 @@ pitch('A3') // => [5, 0, 3]
 
 #### More...
 
-That's all for this library, but maybe you need [transpose notes](https://github.com/danigb/pitch-transpose)
+That's all for this library, but maybe you need:
+
+- [pitch-transpose](https://github.com/danigb/pitch-transpose)
+- [music-interval](https://github.com/danigb/music-interval)
+- [music-scale](https://github.com/danigb/music-scale)
 
 ## API
 
