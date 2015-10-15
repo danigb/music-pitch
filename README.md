@@ -101,30 +101,6 @@ That's all for this library, but maybe you need [transpose notes](https://github
 </div>
 <dl>
 <dt>
-<h4 class="name" id="chroma"><span class="type-signature"></span>chroma<span class="type-signature"></span></h4>
-</dt>
-<dd>
-<div class="description">
-<p>Get chroma of a pitch. The chroma is the integer notation of a pitch class</p>
-</div>
-<dl class="details">
-<dt class="tag-source">Source:</dt>
-<dd class="tag-source"><ul class="dummy">
-<li>
-<a href="https://github.com/danigb/music-pitch/blob/master/dist/music-pitch.js">dist/music-pitch.js</a>
-<span>, </span>
-<a href="https://github.com/danigb/music-pitch/blob/master/dist/music-pitch.js#L182">lineno 182</a>
-</li>
-</ul></dd>
-</dl>
-<h5>Example</h5>
-<pre class="prettyprint"><code>chroma('C') // => 0
-chroma('B#') // => 0
-chroma('Dbb') // => 0</code></pre>
-</dd>
-</dl>
-<dl>
-<dt>
 <h4 class="name" id="accidentals"><span class="type-signature"></span>accidentals<span class="signature">(pitch)</span><span class="type-signature"> &rarr; {String}</span></h4>
 </dt>
 <dd>
