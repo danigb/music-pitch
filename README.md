@@ -1,6 +1,12 @@
 # music-pitch
 
-`music-pitch` is the bridge between midi, your app and your synthetizers. Is a small and fast library to manipulate note names, midi notes and note frequencies.
+[![Build Status](https://travis-ci.org/danigb/music-pitch.svg?branch=master)](https://travis-ci.org/danigb/music-pitch)
+[![Code Climate](https://codeclimate.com/github/danigb/music-pitch/badges/gpa.svg)](https://codeclimate.com/github/danigb/music-pitch)
+[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](https://github.com/feross/standard)
+[![npm version](https://badge.fury.io/js/music-pitch.svg)](https://badge.fury.io/js/music-pitch)
+
+
+`music-pitch` is the bridge between midi, your app and your synthetizers. Is a small (2.5kb minified) and fast library to manipulate note names, midi notes and note frequencies.
 
 ```js
 var pitch = require('music-pitch')
