@@ -37,8 +37,9 @@ module.exports = lib
  * @param {String|Array} pitch - the pitch string or array
  * @return {String} the name of the pitch
  */
-function name (p) {
-  return asPitch.build(asPitch.parse(p))
+function name (pitch) {
+  var p = Array.isArray(pitch) ? pitch : asPitch.parse(pitch)
+  return p ? asPitch.stringify(p) : null
 }
 lib.name = name
 
@@ -80,7 +81,7 @@ lib.octave = fn([asPitch.parse], null, octave)
 function pitchClass (p) {
   return [p[0], p[1], null]
 }
-lib.pitchClass = fn([asPitch.parse], asPitch.build, pitchClass)
+lib.pitchClass = fn([asPitch.parse], asPitch.stringify, pitchClass)
 
 /**
  * Get the pitch of the given midi number
@@ -163,7 +164,7 @@ function toFreq (p, tuning) {
   tuning = tuning || 440
   return Math.pow(2, (midi - 69) / 12) * tuning
 }
-lib.toFreq = fn([asPitch.parse, null], null, toFreq)
+lib.toFreq = toFreq
 
 /**
  * Get the distance in cents between pitches or frequencies

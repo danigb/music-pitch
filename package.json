@@ -26,10 +26,9 @@
   },
   "homepage": "https://github.com/danigb/music-pitch#readme",
   "devDependencies": {
-    "pitch-parser": "file:../pitch-parser",
     "vows": "^0.8.1"
   },
   "dependencies": {
-    "pitch-parser": "file:../pitch-parser"
+    "pitch-parser": "^0.1.0"
   }
 }
