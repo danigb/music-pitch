@@ -2,10 +2,12 @@
 
 var asPitch = require('pitch-parser')
 
+// return the pitch as array
 function asArray (pitch) {
   return Array.isArray(pitch) ? pitch : asPitch.parse(pitch)
 }
 
+// decorate a function to force the param to be an array-pitch
 function parseDecorator (fn) {
   return function (pitch) {
     var p = asArray(pitch)
@@ -26,6 +28,10 @@ module.exports = lib
  *
  * @param {String|Array} pitch - the pitch string or array
  * @return {String} the name of the pitch
+ *
+ * @example
+ * pitch.str('cb') // => 'Cb'
+ * pitch.str('fx2') // => 'F##2'
  */
 function str (pitch) {
   var p = Array.isArray(pitch) ? pitch : asPitch.parse(pitch)
@@ -51,6 +57,11 @@ lib.letter = letter
 /**
  * Get the octave of a pitch
  *
+ * @param {String|Array} pitch - the pitch
+ * @return {Integer} the octave number
+ *
+ * @example
+ * pitch.octave('F#3') // => 3
  */
 function octave (pitch) {
   return pitch[2]
@@ -60,13 +71,13 @@ lib.octave = parseDecorator(octave)
 /**
  * Get the pitch class (pitch name without octaves) from a pitch
  *
- * @param {String} pitch - the pitch to get the pitchClass number from
+ * @param {String|Array} pitch - the pitch to get the pitchClass number from
  * @return {String} the pitch class
  *
  * @example
- * pitchClass('a4') // => 'A'
- * pitchClass('ab') // => 'Ab'
- * pitchClass('cx2') // => 'C##'
+ * pitch.pitchClass('a4') // => 'A'
+ * pitch.pitchClass('ab') // => 'Ab'
+ * pitch.pitchClass('cx2') // => 'C##'
  */
 function pitchClass (p) {
   if (!p) return null
@@ -103,7 +114,7 @@ lib.accidentals = accidentals
  * @return {String} the pitch
  *
  * @example
- * fromMidi(69) // => 'A4'
+ * pitch.fromMidi(69) // => 'A4'
  */
 function fromMidi (midi) {
   var name = CHROMATIC[midi % 12]
@@ -115,14 +126,12 @@ lib.fromMidi = fromMidi
 /**
  * Get the midi number of a pitch
  *
- * @param {String} pitch - the pitch string
- * @param {Integer} octave - (Optional) the pitch octave (will override the
- * value from the pitch string)
+ * @param {String|Array} pitch - the pitch string (or pitch array)
  * @return {Integer} the midi number
  *
  * @example
- * toMidi('A4') // => 69
- * toMidi('A4', 3) // => 57
+ * pitch.toMidi('A4') // => 69
+ * pitch.toMidi('A3') // => 57
  */
 function toMidi (p) {
   if (!p[2] && p[2] !== 0) return null
@@ -142,9 +151,9 @@ lib.toMidi = parseDecorator(toMidi)
  * @see cents
  *
  * @example
- * fromFreq(440) // => 'A4'
- * fromFreq(443) // => 'A4'
- * cents(443, 'A4') // => ... to get the difference
+ * pitch.fromFreq(440) // => 'A4'
+ * pitch.fromFreq(443) // => 'A4'
+ * pitch.cents(443, 'A4') // => ... to get the difference
  */
 function fromFreq (freq, tuning) {
   tuning = tuning || 440
@@ -164,8 +173,8 @@ var NUM = /^\d+(?:\.\d+)?$/
  * @return {Float} - the pitch frequency
  *
  * @example
- * toFreq('A4') // => 440
- * toFreq('A3', 444) // => 222
+ * pitch.toFreq('A4') // => 440
+ * pitch.toFreq('A3', 444) // => 222
  */
 function toFreq (p, tuning) {
   if (NUM.test(p)) return +p
