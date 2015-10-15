@@ -1,7 +1,27 @@
 'use strict'
 
-var ap = require('./a-pitch')
-var pitch = ap.type(require('pitch-parser'))
+var asPitch = require('pitch-parser')
+
+function parse (parser, value) {
+  if (!(typeof value === 'string')) return value
+  return (parser || identity)(value)
+}
+var identity = function (x) { return x }
+function fn (parsers, builder, fn) {
+  var len = parsers.length
+  builder = builder || identity
+
+  return function () {
+    var value
+    var args = []
+    for (var i = 0; i < len; i++) {
+      value = parse(parsers[i], arguments[i])
+      if (value === null) return
+      args.push(value)
+    }
+    return builder(fn.apply(null, args))
+  }
+}
 
 // Semitones from C to C D E F G A B
 var SEMITONES = [ 0, 2, 4, 5, 7, 9, 11 ]
@@ -18,7 +38,7 @@ module.exports = lib
  * @return {String} the name of the pitch
  */
 function name (p) {
-  return pitch.build(pitch.parse(p))
+  return asPitch.build(asPitch.parse(p))
 }
 lib.name = name
 
@@ -44,7 +64,7 @@ lib.letter = letter
 function octave (pitch) {
   return pitch[2]
 }
-lib.octave = ap.fn([pitch.parse], null, octave)
+lib.octave = fn([asPitch.parse], null, octave)
 
 /**
  * Get the pitch class (pitch name without octaves) from a pitch
@@ -60,7 +80,7 @@ lib.octave = ap.fn([pitch.parse], null, octave)
 function pitchClass (p) {
   return [p[0], p[1], null]
 }
-lib.pitchClass = ap.fn([pitch.parse], pitch.build, pitchClass)
+lib.pitchClass = fn([asPitch.parse], asPitch.build, pitchClass)
 
 /**
  * Get the pitch of the given midi number
@@ -97,7 +117,7 @@ function toMidi (t) {
   if (!t[2] && t[2] !== 0) return null
   return SEMITONES[t[0]] + t[1] + 12 * (t[2] + 1)
 }
-lib.toMidi = ap.fn([pitch.parse], null, toMidi)
+lib.toMidi = fn([asPitch.parse], null, toMidi)
 
 /**
  * Get the pitch of a given frequency.
@@ -138,12 +158,12 @@ var NUM = /^\d+(?:\.\d+)?$/
  */
 function toFreq (p, tuning) {
   if (NUM.test(p)) return +p
-  var midi = toMidi(pitch.parse(p))
+  var midi = toMidi(asPitch.parse(p))
   if (!midi) return null
   tuning = tuning || 440
   return Math.pow(2, (midi - 69) / 12) * tuning
 }
-lib.toFreq = ap.fn([pitch.parse, null], null, toFreq)
+lib.toFreq = fn([asPitch.parse, null], null, toFreq)
 
 /**
  * Get the distance in cents between pitches or frequencies
@@ -181,4 +201,4 @@ lib.cents = cents
 function chroma (p) {
   return (SEMITONES[p[0]] + p[1] + 12) % 12
 }
-lib.chroma = ap.fn([pitch.parse], null, chroma)
+lib.chroma = fn([asPitch.parse], null, chroma)

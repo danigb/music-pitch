@@ -1,6 +1,65 @@
 # music-pitch
 
-Note names, midi, frequencies
+`music-pitch` is the bridge between midi, your app and your synthetizers. Is a small and fast library to manipulate note names, midi notes and note frequencies.
+
+```js
+var pitch = require('music-pitch')
+// get a note from midi
+var note = pitch.fromMidi( ... )
+// write it to the console
+console.log(note)
+// give it to your synth
+synth.play(pitch.toFreq(note))
+```
+
+## Installation
+
+#### For node
+
+Install via npm: `npm install --save music-pitch` and require it.
+
+#### Browsers
+
+No distribution (yet). Use webpack, browserify or a similar tool.
+
+## Usage
+
+#### Note names
+
+The `pitch` function returns the [scientific notation](https://en.wikipedia.org/wiki/Scientific_pitch_notation) of a given note if valid. Can be used to check if its a valid note:
+
+```js
+pitch('bbb') // => 'Bbb'
+pitch('fx4') // => 'F##4'
+
+if (pitch(str) !== null) { /* valid pitch str */ }
+```
+
+You can get also pitch classes (pitches without octaves) and note letters:
+
+```js
+pitch.pitchClass('c##5') // => 'C##'
+pitch.letter('eb3') // => 'E'
+```
+
+#### Working with midi
+
+You have two functions for converting from and to midi numbers:
+
+```js
+pitch.toMidi('A4') // => '69'
+pitch.fromMidi(69) // => 'A4'
+```
+
+#### Working with frequencies
+
+The same way, you have two frequency related functions:
+
+```js
+pitch.toFreq('A4') // => 440
+pitch.fromFreq(440) // => 'A4'
+```
+
 
 ## API
 
