@@ -3,12 +3,15 @@ var assert = require('assert')
 var pitch = require('../')
 
 vows.describe('music-pitch').addBatch({
+  'pitch main function': function () {
+    assert.deepEqual(pitch('C#4'), [0, 1, 4])
+  },
   'pitch str': {
-    'name': function () {
-      assert.equal(pitch.name('c'), 'C')
-      assert.equal(pitch.name('bbb3'), 'Bbb3')
-      assert.equal(pitch.name('fx'), 'F##')
-      assert.equal(pitch.name([0, 1, 3]), 'C#3')
+    'str': function () {
+      assert.equal(pitch.str('c'), 'C')
+      assert.equal(pitch.str('bbb3'), 'Bbb3')
+      assert.equal(pitch.str('fx'), 'F##')
+      assert.equal(pitch.str([0, 1, 3]), 'C#3')
     },
     'letter': function () {
       assert.equal(pitch.letter('fx'), 'F')
@@ -23,6 +26,13 @@ vows.describe('music-pitch').addBatch({
       assert.equal(pitch.pitchClass('e#2'), 'E#')
       assert.equal(pitch.pitchClass('dxx'), 'D####')
       assert.equal(pitch.pitchClass('db'), 'Db')
+      assert.equal(pitch.pitchClass('blah'), null)
+    },
+    'accidentals': function () {
+      assert.equal(pitch.accidentals('bbb3'), 'bb')
+      assert.equal(pitch.accidentals('fx5'), '##')
+      assert.equal(pitch.accidentals('c'), '')
+      assert.equal(pitch.accidentals('blah'), null)
     }
   },
   'midi': {
@@ -72,26 +82,6 @@ vows.describe('music-pitch').addBatch({
     'cents': function () {
       assert.equal(pitch.cents('A4', 'A#4'), 100)
       assert.equal(pitch.cents('A4', 444), 15.66)
-    }
-  },
-  'chroma': {
-    'pitch chroma chroma': function () {
-      assert.deepEqual('C C# D D# E F F# G G# A A# B B#'.split(' ').map(pitch.chroma),
-      [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 0])
-      assert.deepEqual('Cb C Db D Eb E F Gb G Ab A Bb B'.split(' ').map(pitch.chroma),
-      [11, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11])
-    },
-    'edge cases': function () {
-      assert.equal(pitch.chroma('Bb'), 10)
-      assert.equal(pitch.chroma('Bbb'), 9)
-      assert.equal(pitch.chroma('bbb'), 9)
-      assert.equal(pitch.chroma('B#'), 0)
-      assert.equal(pitch.chroma('B##'), 1)
-    },
-    'invalid pitch chromas': function () {
-      assert.equal(pitch.chroma('blah'), null)
-      assert.equal(pitch.chroma('m'), null)
-      assert.equal(pitch.chroma('Cmaj7'), null)
     }
   }
 }).export(module)

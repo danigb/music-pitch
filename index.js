@@ -5,6 +5,7 @@ var asPitch = require('pitch-parser')
 function asArray (pitch) {
   return Array.isArray(pitch) ? pitch : asPitch.parse(pitch)
 }
+
 function parseDecorator (fn) {
   return function (pitch) {
     var p = asArray(pitch)
@@ -17,7 +18,7 @@ var SEMITONES = [ 0, 2, 4, 5, 7, 9, 11 ]
 // Chromatic melodic scale
 var CHROMATIC = [ 'C', 'Db', 'D', 'Eb', 'E', 'F', 'F#', 'G', 'Ab', 'A', 'Bb', 'B' ]
 
-var lib = {}
+var lib = asArray
 module.exports = lib
 
 /**
@@ -26,11 +27,11 @@ module.exports = lib
  * @param {String|Array} pitch - the pitch string or array
  * @return {String} the name of the pitch
  */
-function name (pitch) {
+function str (pitch) {
   var p = Array.isArray(pitch) ? pitch : asPitch.parse(pitch)
   return p ? asPitch.stringify(p) : null
 }
-lib.name = name
+lib.str = str
 
 /**
  * Get letter of the pitch (in uppercase)
@@ -42,7 +43,7 @@ lib.name = name
  * pitch.letter('fx') // => 'F'
  */
 function letter (pitch) {
-  var n = name(pitch)
+  var n = str(pitch)
   return n ? n.slice(0, 1) : null
 }
 lib.letter = letter
@@ -70,9 +71,27 @@ lib.octave = parseDecorator(octave)
 function pitchClass (p) {
   if (!p) return null
   else if (Array.isArray(p)) return [p[0], p[1], null]
-  else return asPitch.stringify(pitchClass(asPitch.parse(p)))
+  p = asPitch.parse(p)
+  return p ? asPitch.stringify(pitchClass(p)) : null
 }
 lib.pitchClass = pitchClass
+
+/**
+ * Get the accidentals from a pitch
+ *
+ * @param {String|Array} pitch - the pitch
+ * @return {String} the pitch accidentals
+ *
+ * @example
+ * pitch.accidentals('C##3') // => '##'
+ * pitch.accidentals('Bb4') // => 'b'
+ * pitch.accidentals('E') // => ''
+ */
+function accidentals (p) {
+  var pc = pitchClass(p)
+  return pc ? pc.substring(1) : null
+}
+lib.accidentals = accidentals
 
 /**
  * Get the pitch of the given midi number
@@ -177,20 +196,3 @@ function cents (from, to, decimals) {
   return Math.floor(1200 * (Math.log(toFq / fromFq) * dec / Math.log(2))) / dec
 }
 lib.cents = cents
-
-/**
- * Get chroma of a pitch. The chroma is the integer notation of a pitch class
- *
- * @name chroma
- * @param {String} pitch - the pitch to get the chorma from
- * @return {Integer} the chroma
- *
- * @example
- * chroma('C') // => 0
- * chroma('B#') // => 0
- * chroma('Dbb') // => 0
- */
-function chroma (p) {
-  return (SEMITONES[p[0]] + p[1] + 12) % 12
-}
-lib.chroma = parseDecorator(chroma)

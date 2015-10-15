@@ -1,6 +1,8 @@
 CHANGELOG
 
 [Master]
+- Add accidentals function
+- Rename name to str
 - Add name, letter, octave, pitchClass
 - Add choma function
 - Add fromFreq, toFreq and cents
