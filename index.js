@@ -2,24 +2,13 @@
 
 var asPitch = require('pitch-parser')
 
-function parse (parser, value) {
-  if (!(typeof value === 'string')) return value
-  return (parser || identity)(value)
+function asArray (pitch) {
+  return Array.isArray(pitch) ? pitch : asPitch.parse(pitch)
 }
-var identity = function (x) { return x }
-function fn (parsers, builder, fn) {
-  var len = parsers.length
-  builder = builder || identity
-
-  return function () {
-    var value
-    var args = []
-    for (var i = 0; i < len; i++) {
-      value = parse(parsers[i], arguments[i])
-      if (value === null) return
-      args.push(value)
-    }
-    return builder(fn.apply(null, args))
+function parseDecorator (fn) {
+  return function (pitch) {
+    var p = asArray(pitch)
+    return p ? fn(p) : null
   }
 }
 
@@ -65,7 +54,7 @@ lib.letter = letter
 function octave (pitch) {
   return pitch[2]
 }
-lib.octave = fn([asPitch.parse], null, octave)
+lib.octave = parseDecorator(octave)
 
 /**
  * Get the pitch class (pitch name without octaves) from a pitch
@@ -79,9 +68,11 @@ lib.octave = fn([asPitch.parse], null, octave)
  * pitchClass('cx2') // => 'C##'
  */
 function pitchClass (p) {
-  return [p[0], p[1], null]
+  if (!p) return null
+  else if (Array.isArray(p)) return [p[0], p[1], null]
+  else return asPitch.stringify(pitchClass(asPitch.parse(p)))
 }
-lib.pitchClass = fn([asPitch.parse], asPitch.stringify, pitchClass)
+lib.pitchClass = pitchClass
 
 /**
  * Get the pitch of the given midi number
@@ -114,11 +105,11 @@ lib.fromMidi = fromMidi
  * toMidi('A4') // => 69
  * toMidi('A4', 3) // => 57
  */
-function toMidi (t) {
-  if (!t[2] && t[2] !== 0) return null
-  return SEMITONES[t[0]] + t[1] + 12 * (t[2] + 1)
+function toMidi (p) {
+  if (!p[2] && p[2] !== 0) return null
+  return SEMITONES[p[0]] + p[1] + 12 * (p[2] + 1)
 }
-lib.toMidi = fn([asPitch.parse], null, toMidi)
+lib.toMidi = parseDecorator(toMidi)
 
 /**
  * Get the pitch of a given frequency.
@@ -202,4 +193,4 @@ lib.cents = cents
 function chroma (p) {
   return (SEMITONES[p[0]] + p[1] + 12) % 12
 }
-lib.chroma = fn([asPitch.parse], null, chroma)
+lib.chroma = parseDecorator(chroma)
